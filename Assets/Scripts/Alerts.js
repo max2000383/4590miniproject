@@ -28,7 +28,7 @@ function Update () {
 		}
 	}
 	
-	Debug.Log(trailDistance);
+	//Debug.Log(trailDistance);
 
 }
 
@@ -54,15 +54,15 @@ function trailAlert() {
 	//sounds[1] is the geiger counter noise
 	audio.clip = sounds[1];
 	if ((trailDistance <= 30.0) && (trailDistance >= 20.0)){
-		Debug.Log("incrementing volume ONE");
+		//Debug.Log("incrementing volume ONE");
 		audio.volume = .02;
 	}
 	if ((trailDistance <= 40.0) && (trailDistance >= 30.5)){
-		Debug.Log("incrementing volume TWO");
+		//Debug.Log("incrementing volume TWO");
 		audio.volume = .06;
 	}
 	if ((trailDistance >= 40.5)){
-		Debug.Log("incrementing volume THREE");
+		//Debug.Log("incrementing volume THREE");
 		audio.volume = .12;
 	}
 	
