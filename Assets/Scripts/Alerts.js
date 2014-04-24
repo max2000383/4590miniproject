@@ -4,6 +4,8 @@ var trailDistance : double = 0;
 var animalObj: GameObject;
 var player: GameObject;
 var trail: GameObject;
+var time: double = 0;
+var sunsDown: boolean = false;
 
 function Start () {
 
@@ -11,6 +13,8 @@ function Start () {
 }
 
 function Update () {
+
+	time += .03;
 
 	trailDistance = Vector3.Distance(trail.transform.position, player.transform.position);
 
@@ -28,7 +32,11 @@ function Update () {
 		}
 	}
 	
-	//Debug.Log(trailDistance);
+	if (time > 10.0 && !sunsDown){
+		sundown();
+	}
+	
+	//Debug.Log(time);
 
 }
 
@@ -70,5 +78,17 @@ function trailAlert() {
 		audio.Play();
 	}
 	step = true;
+}
+
+function sundown(){
+
+	audio.clip = sounds[2];
+	audio.volume = 1;
+	if (!audio.isPlaying){
+		audio.Play();
+	}
+	
+	sunsDown = true;
+
 }
 
