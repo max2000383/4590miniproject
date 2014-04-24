@@ -1,7 +1,8 @@
 ﻿var sound : AudioClip;
 var player : GameObject;
 private var audioSource;
-var volumeScale : float = 0.5;
+private var volumeScale : float = 0.3;
+private var waterSeek : boolean = false;
 
 function Start () {
 	audioSource = player.AddComponent(AudioSource);
@@ -12,6 +13,10 @@ function Start () {
 }
 
 function Update () {
+	if (Input.GetKeyDown(KeyCode.W)) {
+		waterSeek = !waterSeek;
+	}
+	
 	var distance = Vector3.Distance(player.transform.position, gameObject.transform.position);
 	var playerRotation = 360 - player.transform.localRotation.eulerAngles.y;
 	var directionToWater = gameObject.transform.position - player.transform.position;
@@ -21,7 +26,7 @@ function Update () {
 	var riverRotation = riverRotationQuat.eulerAngles.y;
 	var direction = Mathf.Abs(((riverRotation - playerRotation + 540) % 360) - 180);
 	
-	if (distance < 25.0) {
+	if (waterSeek) {
 		scale = volumeScale * Mathf.Pow(1 - direction/180.0, 3.0);
 		audioSource.volume = scale;
 	}
