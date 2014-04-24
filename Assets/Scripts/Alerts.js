@@ -7,6 +7,10 @@ var trail: GameObject;
 var time: double = 0;
 var sunsDown: boolean = false;
 
+var closestSurfacePoint1: Vector3;
+var closestSurfacePoint2: Vector3;
+var trueDistance: float;
+
 function Start () {
 
 
@@ -16,7 +20,19 @@ function Update () {
 
 	time += .03;
 
-	trailDistance = Vector3.Distance(trail.transform.position, player.transform.position);
+
+
+
+
+	//trailDistance = Vector3.Distance(trail.transform.position, player.transform.position);
+	closestSurfacePoint1 = player.collider.ClosestPointOnBounds(trail.transform.position);
+	closestSurfacePoint2 = trail.collider.ClosestPointOnBounds(player.transform.position);
+	trueDistance = Vector3.Distance(closestSurfacePoint1, closestSurfacePoint2);
+
+
+
+
+
 
 	//if the person gets too close to the animal, set off the alert
 	if (Vector3.Distance(animalObj.transform.position, player.transform.position) <= 20.0){
@@ -26,7 +42,7 @@ function Update () {
 	}
 	
 	//if the person wanders too far off the trail, set off the geiger counter noise
-	if (trailDistance >= 20.0){
+	if (trueDistance >= 20.0){
 		if (!audio.isPlaying){
 			trailAlert();
 		}
@@ -61,15 +77,15 @@ function trailAlert() {
 	
 	//sounds[1] is the geiger counter noise
 	audio.clip = sounds[1];
-	if ((trailDistance <= 30.0) && (trailDistance >= 20.0)){
+	if ((trueDistance <= 30.0) && (trueDistance >= 20.0)){
 		//Debug.Log("incrementing volume ONE");
 		audio.volume = .02;
 	}
-	if ((trailDistance <= 40.0) && (trailDistance >= 30.5)){
+	if ((trueDistance <= 40.0) && (trueDistance >= 30.5)){
 		//Debug.Log("incrementing volume TWO");
 		audio.volume = .06;
 	}
-	if ((trailDistance >= 40.5)){
+	if ((trueDistance >= 40.5)){
 		//Debug.Log("incrementing volume THREE");
 		audio.volume = .12;
 	}
