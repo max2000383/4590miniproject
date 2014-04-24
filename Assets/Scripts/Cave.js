@@ -9,7 +9,7 @@ function Start () {
 
 function Update () {
 	var distance = Vector3.Distance(gameObject.transform.position, player.transform.position);
-		if (!audio.isPlaying) {
+		if (!audioSource.isPlaying) {
 			// only have the sound play again if the player has left the cave area and returned
 			if (distance < 15.0 && freshApproach == true) {
 				freshApproach = false;
