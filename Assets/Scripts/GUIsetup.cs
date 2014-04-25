@@ -15,18 +15,34 @@ public class GUIsetup : MonoBehaviour {
 	public int bpTwo=80;
 	public float CordZ=10;
 	public GUISkin MenuSkin;
-	public int WarningSelector;
+	public int WarningSelector=1;
 	public string Warning;
 	public GUITexture map;
-	public int guiMode;
+	public int guiMode=1;
 	public Texture atest;
 	void OnGUI () 
 	{	
 		
-		
-		switch (WarningSelector)
+		if(WarningSelector!=1&&WarningSelector!=2&&WarningSelector!=3&&WarningSelector!=4&&WarningSelector!=5)WarningSelector=1;
+		if(guiMode!=1&&guiMode!=2)
 		{
 			
+			GUI.BeginGroup(new Rect((int)(Screen.width*0.6)-40, (int)(Screen.height*.05), 800, 600));
+			GUI.DrawTexture(new Rect(150,0,300,300),atest);
+			GUI.EndGroup();
+			//display the map
+		}
+		switch (WarningSelector)
+		{
+		case 5:
+			Warning="USER EXHAUSTION ONCOMING";
+			break;	
+		case 4:
+			Warning="HIKER IN DISTRESS";
+			break;	
+		case 3:
+			Warning="FOREST FIRE APPROACHING";
+			break;	
 		case 2:
 			Warning="STORM APPROACHING";
 			break;
@@ -86,10 +102,31 @@ public class GUIsetup : MonoBehaviour {
 		
 		
 		if(Input.GetKeyDown(KeyCode.U))
-		{
+		{	
+			guiMode=1;
+			if(WarningSelector==2)WarningSelector=1;
+			else WarningSelector=2;
 			
-			if(WarningSelector==1)WarningSelector=2;
-			else WarningSelector=1;
+		}
+		if(Input.GetKeyDown(KeyCode.O))
+		{
+			guiMode=1;
+			if(WarningSelector==3)WarningSelector=1;
+			else WarningSelector=3;
+			
+		}
+		if(Input.GetKeyDown(KeyCode.G))
+		{
+			guiMode=1;
+			if(WarningSelector==4)WarningSelector=1;
+			else WarningSelector=4;
+			
+		}
+		if(Input.GetKeyDown(KeyCode.H))
+		{
+			guiMode=1;
+			if(WarningSelector==5)WarningSelector=1;
+			else WarningSelector=5;
 			
 		}
 

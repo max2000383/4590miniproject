@@ -8,12 +8,17 @@ var sunsDown: boolean = false;
 var isBeastAlerted: boolean = false;
 var isIvyAlerted: boolean = false;
 var isFallAlerted: boolean = false;
+var isFire: boolean = false;
+var isFireLooping: boolean = false;
+var isHikerDistressed: boolean = false;
+var isThunder: boolean = false;
+var isTired: boolean = false;
 var closestSurfacePoint1: Vector3;
 var closestSurfacePoint2: Vector3;
 var trueDistance: float;
 
 function Start () {
-
+	isHikerDistressed=false;
 
 }
 
@@ -55,10 +60,41 @@ function Update () {
 		sundown();
 	}
 	
+	
+	
+	if(Input.GetKeyDown(KeyCode.H)&&!audio.isPlaying&&!isHikerDistressed){
+		
+		distress();
+	
+	}
+	
+	//distress();
+	
 	//Debug.Log(time);
 
 }
-
+function distress(){
+	//clips 8 and 9 are fire alerts
+	audio.clip = sounds[7];
+	audio.volume = .3;
+	
+	if (!audio.isPlaying && !isHikerDistressed){
+		isHikerDistressed = true;
+		audio.Play();
+	}
+	
+}
+function fireloop(){
+	//clips 8 and 9 are fire alerts
+	audio.clip = sounds[9];
+	audio.volume = 1;
+	
+	if (!audio.isPlaying && !isFireLooping){
+		isFireLooping = true;
+		audio.Play();
+	}
+	
+}
 function beastAlert() {
 	
 	//sounds[0] is the beast alert noise
