@@ -5,6 +5,7 @@ var trail: GameObject;
 var poisonIvy: GameObject;
 var time: double = 0;
 var sunsDown: boolean = false;
+var sunsRisen: boolean = false;
 var isBeastAlerted: boolean = false;
 var isIvyAlerted: boolean = false;
 var isFallAlerted: boolean = false;
@@ -60,7 +61,10 @@ function Update () {
 		sundown();
 	}
 	
-	
+	if (time > 160 && !sunsRisen){
+		sunrise();
+	}
+
 	
 	if(Input.GetKeyDown(KeyCode.H)&&!audio.isPlaying&&!isHikerDistressed){
 		
@@ -70,7 +74,7 @@ function Update () {
 	
 	//distress();
 	
-	//Debug.Log(time);
+	Debug.Log(time);
 
 }
 function distress(){
@@ -165,6 +169,20 @@ function sundown(){
 	}
 	
 	sunsDown = true;
+
+}
+
+
+function sunrise(){
+
+	//sounds[10] is rooster call
+	audio.clip = sounds[10];
+	audio.volume = 1;
+	if (!audio.isPlaying){
+		audio.Play();
+	}
+	
+	sunsRisen = true;
 
 }
 
