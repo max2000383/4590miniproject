@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 //adaptation of included Unity JavaScript component in C# by xadhoom
 //reference: http://forum.unity3d.com/threads/64378-CharacterMotor-FPSInputController-PlatformInputController-in-C
@@ -381,6 +382,9 @@ public class CharacterMotor : MonoBehaviour
 
     void Update()
     {
+
+
+		Screen.lockCursor = true;
         if(!useFixedUpdate)
             UpdateFunction();
     }

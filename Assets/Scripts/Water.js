@@ -13,7 +13,7 @@ function Start () {
 }
 
 function Update () {
-	if (Input.GetKeyDown(KeyCode.W)) {
+	if (Input.GetKeyDown(KeyCode.Q)) {
 		waterSeek = !waterSeek;
 	}
 	
