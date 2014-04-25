@@ -1,12 +1,16 @@
 ﻿var player : GameObject;
-private var freshApproach : boolean = true;
+var dummy : GameObject;
 var sound : AudioClip;
 private var audioSource;
 var approachDistance : float;
 private var playOnApproach : boolean = true;
+private var fadeOut : boolean = false;
+var fadeOutSpeed : float;
+var volumeScale : float;
 
 function Start () {
-	audioSource = player.AddComponent(AudioSource);
+	audioSource = GameObject.Instantiate(dummy.AddComponent(AudioSource));
+	audioSource.clip = sound;
 }
 
 function Update () {
@@ -15,14 +19,26 @@ function Update () {
 	}
 
 	var distance = Vector3.Distance(gameObject.transform.position, player.transform.position);
-	if (!audioSource.isPlaying && playOnApproach) {
-		// only have the sound play again if the player has left the object area and returned
-		if (distance < approachDistance && freshApproach == true) {
-			freshApproach = false;
-			audioSource.PlayOneShot(sound);
+	audioSource.transform.position = gameObject.collider.ClosestPointOnBounds(player.transform.position);
+
+	if (!audioSource.isPlaying && playOnApproach && distance < approachDistance) {
+		audioSource.volume = volumeScale;
+		audioSource.Play();
+	}
+
+	else if (audioSource.isPlaying && !playOnApproach) {
+		audioSource.Stop();
+	}
+
+	else if (fadeOut) {
+		audioSource.volume -= fadeOutSpeed*volumeScale;
+		if (audioSource.volume <= 0) {
+			fadeOut = false;
+			audioSource.Stop();
 		}
-		else if (distance > approachDistance && freshApproach == false) {
-			freshApproach = true;
-		}
+	}
+
+	else if (audioSource.isPlaying && distance > approachDistance) {
+		fadeOut = true;
 	}
 }

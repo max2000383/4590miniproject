@@ -1,8 +1,10 @@
 ﻿var sound : AudioClip;
 var player : GameObject;
+var volumeScale : float;
+var keyCode : KeyCode;
+
 private var audioSource;
-private var volumeScale : float = 0.3;
-private var waterSeek : boolean = false;
+private var objectSeek : boolean = false;
 
 function Start () {
 	audioSource = player.AddComponent(AudioSource);
@@ -13,20 +15,20 @@ function Start () {
 }
 
 function Update () {
-	if (Input.GetKeyDown(KeyCode.Q)) {
-		waterSeek = !waterSeek;
+	if (Input.GetKeyDown(keyCode)) {
+		objectSeek = !objectSeek;
 	}
 	
 	var distance = Vector3.Distance(player.transform.position, gameObject.transform.position);
 	var playerRotation = 360 - player.transform.localRotation.eulerAngles.y;
-	var directionToWater = gameObject.transform.position - player.transform.position;
+	var directionToObject = gameObject.transform.position - player.transform.position;
 	var basePlayerDirection = new Vector3(0.0f, 0.0f, 1.0f);
-	var riverRotationQuat = new Quaternion();
-	riverRotationQuat.SetFromToRotation(directionToWater, basePlayerDirection);
-	var riverRotation = riverRotationQuat.eulerAngles.y;
-	var direction = Mathf.Abs(((riverRotation - playerRotation + 540) % 360) - 180);
+	var objectRotationQuat = new Quaternion();
+	objectRotationQuat.SetFromToRotation(directionToObject, basePlayerDirection);
+	var objectRotation = objectRotationQuat.eulerAngles.y;
+	var direction = Mathf.Abs(((objectRotation - playerRotation + 540) % 360) - 180);
 	
-	if (waterSeek) {
+	if (objectSeek) {
 		scale = volumeScale * Mathf.Pow(1 - direction/180.0, 3.0);
 		audioSource.volume = scale;
 	}
